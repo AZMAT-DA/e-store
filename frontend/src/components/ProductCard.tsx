@@ -1,55 +1,62 @@
-"use client";
+﻿"use client";
+import { useState } from "react";
+import { Product } from "@/lib/api";
+import { useCart } from "@/context/CartContext";
 
-import { motion } from "framer-motion";
-import { ShoppingBag, Star } from "lucide-react";
-import Link from "next/link";
+const SIZES = ["UK 6","UK 7","UK 8","UK 9","UK 10","UK 11"];
 
-interface ProductCardProps {
-  id: string | number;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-}
+export default function ProductCard({ product }: { product: Product }) {
+  const { addToCart, isLoading } = useCart();
+  const [selectedSize, setSelectedSize] = useState<string|null>(null);
+  const [showSizes, setShowSizes] = useState(false);
+  const [added, setAdded] = useState(false);
 
-export default function ProductCard({ id, name, price, image, category }: ProductCardProps) {
+  const handleAdd = async () => {
+    if (!showSizes) { setShowSizes(true); return; }
+    if (!selectedSize) return;
+    await addToCart(product.id, selectedSize);
+    setAdded(true); setShowSizes(false);
+    setTimeout(() => setAdded(false), 2000);
+  };
+
   return (
-    <motion.div
-      whileHover={{ y: -10 }}
-      className="glass-card overflow-hidden group"
-    >
-      <Link href={`/products/${id}`}>
-        <div className="relative h-64 overflow-hidden bg-white/5 p-8">
-          <img
-            src={image}
-            alt={name}
-            className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-          />
-          <div className="absolute top-4 left-4 inline-block px-2 py-1 rounded-md bg-white/5 border border-white/10 text-[10px] uppercase font-bold text-white/60">
-            {category}
-          </div>
-        </div>
-      </Link>
-
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="font-bold text-lg leading-tight truncate mr-4">{name}</h3>
-          <span className="font-black text-primary">${price}</span>
-        </div>
-        
-        <div className="flex items-center gap-1 text-accent mb-6">
-          <Star size={12} fill="currentColor" />
-          <Star size={12} fill="currentColor" />
-          <Star size={12} fill="currentColor" />
-          <Star size={12} fill="currentColor" />
-          <Star size={12} fill="currentColor" className="opacity-50" />
-          <span className="text-[10px] text-white/30 ml-2">(42 Reviews)</span>
-        </div>
-
-        <button className="w-full py-3 bg-white/5 border border-white/10 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary hover:border-primary transition-all group-hover:shadow-lg group-hover:shadow-primary/25">
-          <ShoppingBag size={18} /> ADD TO CART
-        </button>
+    <div style={{background:"#111",border:"1px solid #222",borderRadius:16,overflow:"hidden",transition:"transform 0.2s",position:"relative"}}>
+      {product.badge && (
+        <span style={{position:"absolute",top:12,left:12,background:product.badge==="Sale"?"#ef4444":"#E8C97E",color:product.badge==="Sale"?"#fff":"#0a0a0a",fontSize:10,fontWeight:700,padding:"3px 10px",borderRadius:20,zIndex:2,letterSpacing:2}}>
+          {product.badge}
+        </span>
+      )}
+      <div style={{aspectRatio:"4/3",background:"linear-gradient(135deg,#1a1a1a,#222)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:72}}>
+        👟
       </div>
-    </motion.div>
+      <div style={{padding:16}}>
+        <p style={{color:"#666",fontSize:10,letterSpacing:3,textTransform:"uppercase",marginBottom:4}}>{product.brand}</p>
+        <h3 style={{color:"#f5f5f5",fontSize:15,fontFamily:"serif",marginBottom:8}}>{product.name}</h3>
+        <p style={{color:"#E8C97E",fontSize:11,marginBottom:12}}>{"★".repeat(Math.round(product.rating))} ({product.reviews})</p>
+        {showSizes && (
+          <div style={{marginBottom:12}}>
+            <p style={{color:"#666",fontSize:10,letterSpacing:2,marginBottom:8}}>SELECT SIZE</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:4}}>
+              {SIZES.map(s => (
+                <button key={s} onClick={() => setSelectedSize(s)}
+                  style={{padding:"6px 4px",fontSize:11,borderRadius:8,border:`1px solid ${selectedSize===s?"#E8C97E":"#333"}`,background:selectedSize===s?"rgba(232,201,126,0.1)":"transparent",color:selectedSize===s?"#E8C97E":"#666",cursor:"pointer"}}>
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+          <div>
+            <span style={{color:"#f5f5f5",fontSize:18,fontWeight:500}}>${product.price}</span>
+            {product.old_price && <span style={{color:"#555",fontSize:13,textDecoration:"line-through",marginLeft:8}}>${product.old_price}</span>}
+          </div>
+          <button onClick={handleAdd} disabled={isLoading||(showSizes&&!selectedSize)}
+            style={{background:added?"#22c55e":showSizes&&!selectedSize?"#333":"#E8C97E",color:added?"#fff":showSizes&&!selectedSize?"#666":"#0a0a0a",border:"none",borderRadius:20,padding:"8px 14px",fontSize:12,fontWeight:600,cursor:"pointer",transition:"all 0.2s"}}>
+            {added ? "✓ Added!" : showSizes ? "Confirm" : "+ Add to Bag"}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
