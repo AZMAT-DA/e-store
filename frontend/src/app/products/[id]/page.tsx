@@ -19,7 +19,7 @@ function getCart() {
   catch { return []; }
 }
 
-function saveCart(cart) {
+function saveCart(cart: any[]) {
   localStorage.setItem("solestride_cart", JSON.stringify(cart));
   window.dispatchEvent(new Event("cartUpdated"));
 }
@@ -28,7 +28,7 @@ export default function ProductDetailPage() {
   const { id } = useParams();
   const router = useRouter();
   const product = PRODUCTS.find(p => p.id === Number(id)) || PRODUCTS[0];
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [added, setAdded] = useState(false);
   const [error, setError] = useState("");
 
@@ -36,7 +36,7 @@ export default function ProductDetailPage() {
     if (!selectedSize) { setError("Please select a size first!"); return; }
     setError("");
     const cart = getCart();
-    const existing = cart.find(i => i.id === product.id && i.size === selectedSize);
+    const existing = cart.find((i: any) => i.id === product.id && i.size === selectedSize);
     if (existing) { existing.quantity += 1; }
     else { cart.push({ id: product.id, name: product.name, price: product.price, image: product.image, size: selectedSize, color: product.color, quantity: 1 }); }
     saveCart(cart);
