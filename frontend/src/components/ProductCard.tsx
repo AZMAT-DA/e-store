@@ -26,6 +26,8 @@ export default function ProductCard({ product }: { product: Product }) {
     setTimeout(() => setAdded(false), 2000);
   };
 
+  const imageUrl = product.image_url || "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500";
+
   return (
     <div style={{background:"#111",border:"1px solid #222",borderRadius:16,overflow:"hidden",position:"relative"}}>
       {product.badge && (
@@ -33,8 +35,13 @@ export default function ProductCard({ product }: { product: Product }) {
           {product.badge}
         </span>
       )}
-      <div style={{aspectRatio:"4/3",background:"linear-gradient(135deg,#1a1a1a,#222)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:72}}>
-        👟
+      <div style={{aspectRatio:"4/3",overflow:"hidden"}}>
+        <img src={imageUrl} alt={product.name}
+          style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.3s"}}
+          onMouseOver={e => (e.currentTarget.style.transform="scale(1.05)")}
+          onMouseOut={e => (e.currentTarget.style.transform="scale(1)")}
+          onError={e => { e.currentTarget.style.display="none"; }}
+        />
       </div>
       <div style={{padding:16}}>
         <p style={{color:"#666",fontSize:10,letterSpacing:3,textTransform:"uppercase",marginBottom:4}}>{product.brand}</p>
