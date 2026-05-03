@@ -1,21 +1,18 @@
 "use client";
 import ProductCard from "@/components/ProductCard";
-
-const NEW_PRODUCTS = [
-  { id: 101, name: "Air Phantom X", brand: "Nike", category: "men", price: 189.99, old_price: 229.99, description: "Lightweight running shoe.", image_url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", badge: "New", in_stock: true, rating: 4.8, reviews: 342 },
-  { id: 102, name: "Velocity Pro", brand: "Adidas", category: "men", price: 210.00, old_price: null, description: "Performance training shoe.", image_url: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500", badge: "New", in_stock: true, rating: 4.9, reviews: 128 },
-  { id: 103, name: "Cloud Stride", brand: "HOKA", category: "women", price: 165.00, old_price: null, description: "Maximum cushioning.", image_url: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500", badge: "New", in_stock: true, rating: 4.7, reviews: 215 },
-];
+import { ALL_PRODUCTS } from "@/lib/products";
 
 export default function NewArrivalsPage() {
+  const newProducts = ALL_PRODUCTS.slice(0, 3);
   return (
-    <div className="container mx-auto px-8 md:px-16 py-24">
-      <h1 className="text-6xl font-black mb-4 tracking-tighter">New Arrivals</h1>
-      <p className="text-white/40 mb-16">The latest drops, just landed.</p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-        {NEW_PRODUCTS.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+    <div style={{minHeight:"100vh",background:"#0a0a0a",paddingTop:80}}>
+      <div style={{maxWidth:1200,margin:"0 auto",padding:"40px 24px"}}>
+        <p style={{color:"#E8C97E",fontSize:11,letterSpacing:4,textTransform:"uppercase",marginBottom:12}}>Just Landed</p>
+        <h1 style={{fontFamily:"serif",fontSize:48,fontWeight:900,color:"#f5f5f5",marginBottom:8}}>New Arrivals</h1>
+        <p style={{color:"#666",marginBottom:40}}>The freshest styles, just dropped.</p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:24}}>
+          {newProducts.map(p => <ProductCard key={p.id} product={p} />)}
+        </div>
       </div>
     </div>
   );
