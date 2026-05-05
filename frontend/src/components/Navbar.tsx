@@ -9,11 +9,12 @@ export default function Navbar() {
         <Link href="/" style={{fontFamily:"serif",fontSize:22,letterSpacing:4,color:"#f5f5f5",textDecoration:"none"}}>
           SOLE<span style={{color:"#E8C97E"}}>STRIDE</span>
         </Link>
-        <nav style={{display:"flex",gap:32}}>
+        <nav style={{display:"flex",gap:28,alignItems:"center"}}>
           <Link href="/shop" style={{color:"#999",fontSize:13,letterSpacing:2,textDecoration:"none"}}>Shop</Link>
           <Link href="/new" style={{color:"#999",fontSize:13,letterSpacing:2,textDecoration:"none"}}>New Arrivals</Link>
           <Link href="/collections" style={{color:"#999",fontSize:13,letterSpacing:2,textDecoration:"none"}}>Collections</Link>
           <Link href="/story" style={{color:"#999",fontSize:13,letterSpacing:2,textDecoration:"none"}}>Our Story</Link>
+          <Link href="/admin" style={{color:"#E8C97E",fontSize:12,letterSpacing:2,textDecoration:"none",border:"1px solid rgba(232,201,126,0.3)",padding:"4px 12px",borderRadius:20}}>Admin</Link>
         </nav>
         <CartDrawerTrigger />
       </div>

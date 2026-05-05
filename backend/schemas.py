@@ -3,31 +3,46 @@ from typing import List, Optional
 
 class ProductBase(BaseModel):
     name: str
-    description: str
+    brand: str
+    category: str
     price: float
-    image_url: str
-    stock: int
-    category_id: int
+    old_price: Optional[float] = None
+    description: Optional[str] = None
+    image_url: Optional[str] = None
+    badge: Optional[str] = None
+    in_stock: bool = True
+    rating: float = 4.5
+    reviews: int = 0
 
 class ProductCreate(ProductBase):
     pass
 
 class Product(ProductBase):
     id: int
-
     class Config:
         from_attributes = True
 
-class CategoryBase(BaseModel):
-    name: str
-    description: Optional[str] = None
+class CartItemCreate(BaseModel):
+    product_id: int
+    quantity: int = 1
+    size: Optional[str] = None
 
-class CategoryCreate(CategoryBase):
-    pass
+class CartItemUpdate(BaseModel):
+    quantity: int
 
-class Category(CategoryBase):
+class CartItemOut(BaseModel):
     id: int
-    products: List[Product] = []
+    product_id: int
+    quantity: int
+    size: Optional[str]
+    product: Product
+    class Config:
+        from_attributes = True
 
+class CartResponse(BaseModel):
+    session_id: str
+    items: List[CartItemOut]
+    total_items: int
+    subtotal: float
     class Config:
         from_attributes = True
