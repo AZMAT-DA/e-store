@@ -67,7 +67,7 @@ def update_cart_item(session_id: str, item_id: int, qty: schemas.CartItemUpdate,
     return crud.update_cart_item(db, session_id, item_id, qty.quantity)
 
 @app.delete('/cart/{session_id}/remove/{item_id}')
-def remove_cart_item(session_id: str, item_id: int, db: Session = Depends(get_db))::
+def remove_cart_item(session_id: str, item_id: int, db: Session = Depends(get_db)):
     return crud.remove_cart_item(db, session_id, item_id)
 
 @app.delete('/cart/{session_id}/clear')
