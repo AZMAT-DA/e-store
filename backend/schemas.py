@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Optional
 
-class ProductBase(BaseModel):
+class ProductCreate(BaseModel):
     name: str
     brand: str
     category: str
@@ -14,14 +14,6 @@ class ProductBase(BaseModel):
     rating: float = 4.5
     reviews: int = 0
 
-class ProductCreate(ProductBase):
-    pass
-
-class Product(ProductBase):
-    id: int
-    class Config:
-        from_attributes = True
-
 class CartItemCreate(BaseModel):
     product_id: int
     quantity: int = 1
@@ -29,20 +21,3 @@ class CartItemCreate(BaseModel):
 
 class CartItemUpdate(BaseModel):
     quantity: int
-
-class CartItemOut(BaseModel):
-    id: int
-    product_id: int
-    quantity: int
-    size: Optional[str]
-    product: Product
-    class Config:
-        from_attributes = True
-
-class CartResponse(BaseModel):
-    session_id: str
-    items: List[CartItemOut]
-    total_items: int
-    subtotal: float
-    class Config:
-        from_attributes = True
