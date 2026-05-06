@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = "https://e-store-production-8782.up.railway.app";
 
 interface Product {
   id: number; name: string; brand: string; category: string;
