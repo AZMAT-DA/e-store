@@ -96,11 +96,11 @@ export default function AdminPage() {
             <h1 style={{ fontFamily: "serif", fontSize: 40, fontWeight: 900, color: "#f5f5f5", marginBottom: 4 }}>
               Admin Panel
             </h1>
-            <p style={{ color: "#666", fontSize: 14 }}>Manage products — Create, Read, Update, Delete</p>
+            <p style={{ color: "#666", fontSize: 14 }}>Manage products â€” Create, Read, Update, Delete</p>
           </div>
           <button onClick={() => { setShowForm(!showForm); setForm(EMPTY); setEditId(null); }}
             style={{ background: "#E8C97E", color: "#0a0a0a", border: "none", borderRadius: 30, padding: "12px 28px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
-            {showForm ? "✕ Cancel" : "+ Add New Product"}
+            {showForm ? "âœ• Cancel" : "+ Add New Product"}
           </button>
         </div>
 
@@ -110,15 +110,15 @@ export default function AdminPage() {
             background: msg.includes("deleted") ? "rgba(239,68,68,0.15)" : "rgba(34,197,94,0.15)",
             border: `1px solid ${msg.includes("deleted") ? "#ef4444" : "#22c55e"}`,
             color: msg.includes("deleted") ? "#ef4444" : "#22c55e", fontSize: 14, fontWeight: 600 }}>
-            {msg.includes("deleted") ? "🗑 " : "✓ "}{msg}
+            {msg.includes("deleted") ? "ðŸ—‘ " : "âœ“ "}{msg}
           </div>
         )}
 
-        {/* FORM — CREATE / UPDATE */}
+        {/* FORM â€” CREATE / UPDATE */}
         {showForm && (
           <div style={{ background: "#111", border: "1px solid #222", borderRadius: 16, padding: 28, marginBottom: 32 }}>
             <h2 style={{ color: "#E8C97E", fontFamily: "serif", fontSize: 22, marginBottom: 24 }}>
-              {editId ? "✏️ Edit Product #" + editId : "➕ Add New Product"}
+              {editId ? "âœï¸ Edit Product #" + editId : "âž• Add New Product"}
             </h2>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
@@ -167,7 +167,7 @@ export default function AdminPage() {
 
               {/* Old Price */}
               <div>
-                <label style={labelStyle}>Old Price ($) — for Sale</label>
+                <label style={labelStyle}>Old Price ($) â€” for Sale</label>
                 <input style={inputStyle} type="number" placeholder="e.g. 229.99 (optional)" value={form.old_price || ""}
                   onChange={e => setForm({ ...form, old_price: e.target.value ? Number(e.target.value) : null })} />
               </div>
@@ -215,7 +215,7 @@ export default function AdminPage() {
                 <img src={form.image_url} style={{ width: 60, height: 60, objectFit: "cover", borderRadius: 8 }} onError={e => { e.currentTarget.style.display = "none"; }} />
                 <div>
                   <p style={{ color: "#E8C97E", fontSize: 13, fontWeight: 600 }}>{form.name || "Product Name"}</p>
-                  <p style={{ color: "#666", fontSize: 12 }}>{form.brand} — ${form.price}</p>
+                  <p style={{ color: "#666", fontSize: 12 }}>{form.brand} â€” ${form.price}</p>
                 </div>
               </div>
             )}
@@ -223,7 +223,7 @@ export default function AdminPage() {
             <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
               <button onClick={handleSubmit} disabled={loading}
                 style={{ background: "#E8C97E", color: "#0a0a0a", border: "none", borderRadius: 30, padding: "12px 32px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
-                {loading ? "Saving..." : editId ? "✓ Update Product" : "✓ Create Product"}
+                {loading ? "Saving..." : editId ? "âœ“ Update Product" : "âœ“ Create Product"}
               </button>
               <button onClick={() => { setShowForm(false); setForm(EMPTY); setEditId(null); }}
                 style={{ background: "none", color: "#666", border: "1px solid #333", borderRadius: 30, padding: "12px 24px", fontSize: 14, cursor: "pointer" }}>
@@ -235,7 +235,7 @@ export default function AdminPage() {
 
         {/* SEARCH + STATS */}
         <div style={{ display: "flex", gap: 12, marginBottom: 24, flexWrap: "wrap", alignItems: "center" }}>
-          <input style={{ ...inputStyle, maxWidth: 300 }} placeholder="🔍 Search products..."
+          <input style={{ ...inputStyle, maxWidth: 300 }} placeholder="ðŸ” Search products..."
             value={search} onChange={e => setSearch(e.target.value)} />
           <div style={{ display: "flex", gap: 8 }}>
             {[["Total", products.length], ["Men", products.filter(p=>p.category==="men").length],
@@ -249,7 +249,7 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* PRODUCT TABLE — READ */}
+        {/* PRODUCT TABLE â€” READ */}
         <div style={{ background: "#111", border: "1px solid #222", borderRadius: 16, overflow: "hidden" }}>
           {/* Table Header */}
           <div style={{ display: "grid", gridTemplateColumns: "60px 1fr 100px 80px 90px 100px 160px",
@@ -261,7 +261,7 @@ export default function AdminPage() {
 
           {filtered.length === 0 ? (
             <div style={{ padding: 40, textAlign: "center", color: "#444" }}>
-              <p style={{ fontSize: 32, marginBottom: 8 }}>👟</p>
+              <p style={{ fontSize: 32, marginBottom: 8 }}>ðŸ‘Ÿ</p>
               <p>No products found.</p>
             </div>
           ) : filtered.map((p, i) => (
@@ -274,7 +274,7 @@ export default function AdminPage() {
               <div style={{ width: 48, height: 48, borderRadius: 8, overflow: "hidden", background: "#1a1a1a" }}>
                 {p.image_url
                   ? <img src={p.image_url} style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.currentTarget.style.display="none"; }} />
-                  : <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: 20 }}>👟</div>
+                  : <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: 20 }}>ðŸ‘Ÿ</div>
                 }
               </div>
 
@@ -304,7 +304,7 @@ export default function AdminPage() {
                 ? <span style={{ background: p.badge === "Sale" ? "#ef4444" : "#E8C97E",
                     color: p.badge === "Sale" ? "#fff" : "#0a0a0a",
                     fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20 }}>{p.badge}</span>
-                : <span style={{ color: "#333", fontSize: 12 }}>—</span>
+                : <span style={{ color: "#333", fontSize: 12 }}>â€”</span>
               }
 
               {/* Actions */}
@@ -312,12 +312,12 @@ export default function AdminPage() {
                 <button onClick={() => handleEdit(p)}
                   style={{ background: "rgba(232,201,126,0.15)", color: "#E8C97E", border: "1px solid rgba(232,201,126,0.3)",
                     borderRadius: 8, padding: "6px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
-                  ✏️ Edit
+                  âœï¸ Edit
                 </button>
                 <button onClick={() => setDeleteConfirm(p.id)}
                   style={{ background: "rgba(239,68,68,0.15)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.3)",
                     borderRadius: 8, padding: "6px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
-                  🗑
+                  ðŸ—‘
                 </button>
               </div>
             </div>
@@ -329,7 +329,7 @@ export default function AdminPage() {
           <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.8)", zIndex: 200,
             display: "flex", alignItems: "center", justifyContent: "center" }}>
             <div style={{ background: "#111", border: "1px solid #333", borderRadius: 20, padding: 40, maxWidth: 400, width: "90%", textAlign: "center" }}>
-              <p style={{ fontSize: 48, marginBottom: 16 }}>⚠️</p>
+              <p style={{ fontSize: 48, marginBottom: 16 }}>âš ï¸</p>
               <h3 style={{ color: "#f5f5f5", fontFamily: "serif", fontSize: 22, marginBottom: 8 }}>Delete Product?</h3>
               <p style={{ color: "#666", fontSize: 14, marginBottom: 28 }}>
                 Are you sure you want to delete product #{deleteConfirm}? This cannot be undone.
@@ -349,7 +349,7 @@ export default function AdminPage() {
         )}
 
         <p style={{ color: "#333", fontSize: 12, textAlign: "center", marginTop: 32 }}>
-          SoleStride Admin Panel — CRUD Operations via FastAPI REST API
+          SoleStride Admin Panel â€” CRUD Operations via FastAPI REST API
         </p>
       </div>
     </div>
