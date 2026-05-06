@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 import models, schemas, crud
 from database import SessionLocal, engine
 
+# Drop and recreate all tables
+models.Base.metadata.drop_all(bind=engine)
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title='SoleStride API')
@@ -73,4 +75,3 @@ def remove_cart_item(session_id: str, item_id: int, db: Session = Depends(get_db
 @app.delete('/cart/{session_id}/clear')
 def clear_cart(session_id: str, db: Session = Depends(get_db)):
     return crud.clear_cart(db, session_id)
-
